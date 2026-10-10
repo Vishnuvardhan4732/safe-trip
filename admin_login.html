@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Administrator login{% endblock %}
+{% block content %}
+<section class="login-wrap">
+  <div class="login-art"><span class="big-star">✦</span><h2>SafeTrip control room</h2><p>Manage demonstration safety alerts responsibly. Only authorized administrators should access this area.</p></div>
+  <div class="panel login-panel"><span class="eyebrow">RESTRICTED ACCESS</span><h1>Admin sign in</h1><form method="post">
+    <label for="username">Username</label><input id="username" name="username" autocomplete="username" required maxlength="80">
+    <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+    <button class="btn btn-primary full-btn" type="submit">Sign in securely</button>
+  </form><p class="muted small">For first local demo only, see the README for initial credentials. Change them before public deployment.</p></div>
+</section>
+{% endblock %}

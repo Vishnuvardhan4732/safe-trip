@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Interactive safety map{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+{% endblock %}
+{% block content %}
+<section class="page-hero compact"><span class="eyebrow">EXPLORE THE AREA</span><h1>Interactive safety <em>map</em></h1><p>Use the map to explore example marker types. Demo markers are illustrative and are not verified facilities.</p></section>
+<section class="map-layout">
+  <div class="map-panel"><div id="safety-map" aria-label="Interactive map"></div><div class="map-legend"><span><i class="dot dot-blue"></i> Tourist example</span><span><i class="dot dot-red"></i> Hospital example</span><span><i class="dot dot-amber"></i> Shelter example</span><span><i class="dot dot-purple"></i> Demo hazard</span></div></div>
+  <aside class="panel map-side"><span class="pill pill-demo">Illustrative data</span><h2>Map guide</h2><p>Markers below are sample points near Chennai used to demonstrate map interaction.</p><div class="notice notice-warning"><b>Not a verified directory</b><p>Do not rely on these marker positions for emergency care, shelter or hazard information.</p></div><h3>How to use</h3><ul class="check-bullets"><li>Click a marker for its demo description.</li><li>Zoom or pan to explore the map.</li><li>Use official maps and emergency services for real-world decisions.</li></ul><a class="btn btn-primary full-btn" href="{{ url_for('destination') }}">Check destination weather</a></aside>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const mapElement = document.getElementById("safety-map");
+  if (!mapElement || !window.L) {
+    if (mapElement) mapElement.innerHTML = "Map library unavailable. Check your internet connection.";
+    return;
+  }
+  const map = L.map("safety-map").setView([13.0827, 80.2707], 11);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+  const points = [
+    {p:[13.0827,80.2707], name:"Chennai city centre (demo)", type:"Tourist example", color:"#2583c5"},
+    {p:[13.0604,80.2496], name:"Example medical facility marker", type:"Hospital example — not verified", color:"#df5353"},
+    {p:[13.1050,80.2200], name:"Example shelter marker", type:"Shelter example — not verified", color:"#d89b2b"},
+    {p:[13.0200,80.2900], name:"Example hazard marker", type:"Demonstration hazard only", color:"#8b68c8"}
+  ];
+  points.forEach(function (item) {
+    const icon = L.divIcon({
+      className: "safe-marker",
+      html: '<span style="background:'+item.color+'"></span>',
+      iconSize: [20,20], iconAnchor: [10,10]
+    });
+    L.marker(item.p, {icon:icon}).addTo(map)
+      .bindPopup("<b>"+item.name+"</b><br>"+item.type);
+  });
+});
+</script>
+{% endblock %}

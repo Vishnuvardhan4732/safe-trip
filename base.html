@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3558">
+  <title>{% block title %}SafeTrip{% endblock %} | SafeTrip</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{{ url_for('home') }}" aria-label="SafeTrip home">
+    <span class="brand-icon">✦</span><span>SafeTrip<small>Travel safer. Feel prepared.</small></span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  <nav class="nav-links">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('destination') }}">Destination</a>
+    <a href="{{ url_for('safety_map') }}">Safety map</a>
+    <a href="{{ url_for('health') }}">Health & safety</a>
+    <a href="{{ url_for('checklist') }}">Checklist</a>
+    <a class="nav-emergency" href="{{ url_for('emergency') }}">Emergency</a>
+    {% if session.get('admin_id') %}
+      <a href="{{ url_for('admin_dashboard') }}">Admin</a>
+      <form class="inline-form" method="post" action="{{ url_for('admin_logout') }}"><button class="nav-logout" type="submit">Sign out</button></form>
+    {% else %}
+      <a href="{{ url_for('admin_login') }}">Admin login</a>
+    {% endif %}
+  </nav>
+</header>
+
+<main>
+  <div class="flash-wrap">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+  </div>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div><a class="footer-brand" href="{{ url_for('home') }}">✦ SafeTrip</a><p>Practical travel safety information in one place.</p></div>
+  <div class="footer-links"><a href="{{ url_for('about') }}">About & data sources</a><a href="{{ url_for('emergency') }}">Emergency information</a></div>
+  <p class="footer-note">Prototype only. Follow official alerts and local authorities. SafeTrip does not dispatch emergency services.</p>
+  <small>© {{ current_year }} SafeTrip · Hackathon demonstration</small>
+</footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

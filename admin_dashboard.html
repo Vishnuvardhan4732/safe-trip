@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Admin dashboard{% endblock %}
+{% block content %}
+<section class="page-hero compact"><span class="eyebrow">ADMINISTRATOR · {{ session.get('admin_username') }}</span><h1>Alert <em>management</em></h1><p>Add, update, resolve or remove notices. Enter a source and do not label unverified content as official.</p><a class="btn btn-primary" href="{{ url_for('add_alert') }}">+ Add new alert</a></section>
+<section class="section">
+  <div class="table-wrap"><table class="admin-table"><thead><tr><th>Alert</th><th>Severity</th><th>Status</th><th>Source / time</th><th>Actions</th></tr></thead><tbody>
+  {% for alert in alerts %}
+    <tr><td><b>{{ alert['title'] }}</b><small>{{ alert['location'] }}</small><p>{{ alert['details'] }}</p></td><td><span class="severity severity-{{ alert['severity']|lower }}">{{ alert['severity'] }}</span></td><td><span class="status status-{{ alert['status']|lower }}">{{ alert['status'] }}</span></td><td><small>{{ alert['source'] }}</small><small>{{ alert['created_at'] }}</small></td><td class="action-cell"><a class="btn btn-small btn-outline" href="{{ url_for('edit_alert', alert_id=alert['id']) }}">Edit</a>
+    {% if alert['status'] == 'Active' %}<form method="post" action="{{ url_for('resolve_alert', alert_id=alert['id']) }}"><button class="btn btn-small btn-teal" type="submit">Resolve</button></form>{% endif %}
+    <form method="post" action="{{ url_for('delete_alert', alert_id=alert['id']) }}" onsubmit="return confirm('Permanently delete this alert?')"><button class="btn btn-small btn-danger" type="submit">Delete</button></form></td></tr>
+  {% else %}<tr><td colspan="5">No alerts yet.</td></tr>{% endfor %}
+  </tbody></table></div>
+  <div class="notice notice-warning"><b>Admin responsibility:</b> A password-protected form does not independently verify the truth of an alert. Confirm information and identify its source before publishing it.</div>
+</section>
+{% endblock %}

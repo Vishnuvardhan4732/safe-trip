@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Home dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">YOUR TRAVEL COMPANION</span>
+    <h1>Explore more.<br><em>Travel safer.</em></h1>
+    <p>Find destination weather, prepare for common hazards, and keep essential safety information close at hand.</p>
+    <form class="hero-search" method="post" action="{{ url_for('destination') }}">
+      <span aria-hidden="true">⌖</span>
+      <input name="place" placeholder="Where are you travelling?" aria-label="Destination" required>
+      <button class="btn btn-primary" type="submit">Check destination</button>
+    </form>
+    <div class="hero-footnote">Weather is retrieved live when available. Alerts marked “demo” are examples only.</div>
+  </div>
+  <div class="hero-art" aria-label="Illustration of mountains and a travel route">
+    <div class="sun"></div><div class="mountain mountain-back"></div><div class="mountain mountain-front"></div>
+    <div class="route-line">✦ ┄ ┄ ┄ ➤</div><div class="art-card"><span>✈</span><div><b>Ready for the journey?</b><small>Check before you go</small></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading"><div><span class="eyebrow">YOUR SAFETY HUB</span><h2>What do you need today?</h2></div><p>Simple tools for safer travel decisions.</p></div>
+  <div class="feature-grid">
+    <a class="feature-card" href="{{ url_for('destination') }}"><span class="feature-icon blue">☁</span><h3>Weather & destination</h3><p>Look up current conditions and practical travel precautions.</p><span class="card-link">Check a destination →</span></a>
+    <a class="feature-card" href="{{ url_for('health') }}"><span class="feature-icon teal">✚</span><h3>Health & safety</h3><p>Quick guidance for heat, floods, air quality and travel health.</p><span class="card-link">Read safety guidance →</span></a>
+    <a class="feature-card" href="{{ url_for('safety_map') }}"><span class="feature-icon amber">⌖</span><h3>Safety map</h3><p>Explore the interactive map and understand the demo markers.</p><span class="card-link">Open map →</span></a>
+    <a class="feature-card" href="{{ url_for('emergency') }}"><span class="feature-icon red">☎</span><h3>Emergency help</h3><p>Keep emergency information and response steps accessible.</p><span class="card-link">View emergency details →</span></a>
+    <a class="feature-card" href="{{ url_for('checklist') }}"><span class="feature-icon purple">✓</span><h3>Travel checklist</h3><p>Prepare documents, medicines, devices and contacts before leaving.</p><span class="card-link">Prepare my trip →</span></a>
+    <a class="feature-card" href="{{ url_for('about') }}"><span class="feature-icon green">ⓘ</span><h3>Sources & limitations</h3><p>See where information comes from and what this prototype cannot do.</p><span class="card-link">Learn more →</span></a>
+  </div>
+</section>
+
+<section class="section alert-section">
+  <div class="section-heading"><div><span class="eyebrow">SAFETY NOTICEBOARD</span><h2>Travel alerts</h2></div><span class="pill pill-demo">Demo alerts clearly labelled</span></div>
+  <div class="alert-list">
+    {% for alert in alerts %}
+      <article class="alert-card">
+        <span class="severity severity-{{ alert['severity']|lower }}">{{ alert['severity'] }}</span>
+        <div class="alert-body"><h3>{{ alert['title'] }}</h3><p><b>{{ alert['location'] }}</b> · {{ alert['created_at'] }}</p><p>{{ alert['details'] }}</p><small>Source: {{ alert['source'] }}</small></div>
+      </article>
+    {% else %}
+      <p>No active administrator alerts are listed.</p>
+    {% endfor %}
+  </div>
+  <p class="disclaimer">These sample alerts are not official warnings. Check the relevant government and local authority notices before travelling.</p>
+</section>
+
+<section class="emergency-banner">
+  <div><span class="eyebrow light">NEED URGENT HELP?</span><h2>Keep emergency support within reach.</h2><p>In India, 112 is the pan-India emergency response number. Confirm local options when travelling.</p></div>
+  <a class="btn btn-light" href="{{ url_for('emergency') }}">Emergency information →</a>
+</section>
+{% endblock %}

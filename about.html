@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}About and data sources{% endblock %}
+{% block content %}
+<section class="page-hero compact"><span class="eyebrow">TRANSPARENT BY DESIGN</span><h1>About <em>SafeTrip</em></h1><p>A hackathon prototype to help tourists prepare, find general safety guidance and understand where to look for reliable information.</p></section>
+<section class="section two-col">
+  <div class="panel"><h2>Problem statement</h2><p>Travellers may need to check multiple sources for weather, safety advice, emergency information and trip preparation. SafeTrip brings basic guidance into one accessible interface while clearly stating the limits of its data.</p><h2>Objectives</h2><ul class="check-bullets"><li>Make travel preparation easier.</li><li>Provide concise, multilingual safety reminders.</li><li>Show current weather when the external service responds.</li><li>Allow an administrator to maintain prototype safety notices.</li></ul></div>
+  <div class="panel"><h2>Technology stack</h2><div class="tech-list"><span>Python</span><span>Flask</span><span>SQLite</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Leaflet</span><span>OpenStreetMap</span><span>Open-Meteo</span></div><h2>Data sources</h2><ul class="check-bullets"><li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — destination geocoding and weather lookup.</li><li><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> — map tiles and attribution.</li><li>Administrator-entered notices — marked with the source entered by the admin.</li><li>Map markers and seeded alerts — demonstration examples, not verified live data.</li></ul></div>
+</section>
+<div class="notice notice-warning wide-notice"><b>Important limitations:</b> SafeTrip is not an official warning system, verified hospital directory, medical service, or emergency dispatcher. Verify critical information through official sources and local authorities. Live weather may be unavailable if internet access or the API is down.</div>
+{% endblock %}

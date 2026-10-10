@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Travel checklist{% endblock %}
+{% block content %}
+<section class="page-hero compact"><span class="eyebrow">PREPARE BEFORE YOU GO</span><h1>Your travel <em>checklist</em></h1><p>Tick off what you have packed. Your progress is saved in this browser on this device.</p></section>
+<section class="checklist-layout">
+  <div class="panel checklist-panel">
+    <div class="checklist-top"><div><span class="eyebrow">TRIP READINESS</span><h2>Ready for departure?</h2></div><button class="btn btn-outline" id="reset-checklist" type="button">Reset checklist</button></div>
+    <div class="progress-track"><div id="check-progress"></div></div><p id="check-count" class="muted">0 of 10 completed</p>
+    <div id="checklist-items" class="checklist-items">
+      <label class="check-item"><input type="checkbox" data-check="documents"><span><b>Identity documents and tickets</b><small>ID, passport/visa if needed, bookings and copies</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="phone"><span><b>Phone, charger and power bank</b><small>Charge devices and keep emergency numbers accessible</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="water"><span><b>Drinking water</b><small>Carry safe drinking water for the journey</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="medicine"><span><b>Essential medicines</b><small>Bring regular medication and prescriptions where needed</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="contacts"><span><b>Emergency contacts</b><small>Save a trusted contact and local emergency information</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="clothes"><span><b>Weather-appropriate clothing</b><small>Check forecast and pack suitable layers or rain protection</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="stay"><span><b>Accommodation details</b><small>Save address, booking reference and check-in information</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="transport"><span><b>Transport and route plan</b><small>Confirm pickup details and share your itinerary</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="firstaid"><span><b>Basic first-aid supplies</b><small>Pack suitable basic supplies for your trip</small></span></label>
+      <label class="check-item"><input type="checkbox" data-check="weather"><span><b>Weather and official advisories checked</b><small>Review reliable alerts close to departure</small></span></label>
+    </div>
+    <div class="check-complete" id="check-complete" hidden>✓ Great job — your checklist is complete.</div>
+  </div>
+  <aside class="panel"><span class="feature-icon teal">✓</span><h2>One last reminder</h2><p>Keep a copy of important information offline and let someone you trust know your plans.</p><a class="btn btn-primary full-btn" href="{{ url_for('destination') }}">Check destination</a><a class="btn btn-outline full-btn" href="{{ url_for('emergency') }}">Review emergency info</a></aside>
+</section>
+{% endblock %}

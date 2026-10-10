@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit alert' if alert else 'Add alert' }}{% endblock %}
+{% block content %}
+<section class="page-hero compact"><span class="eyebrow">ADMINISTRATOR</span><h1>{{ 'Edit safety alert' if alert else 'Create a safety alert' }}</h1><p>Enter clear instructions and the source of the information.</p></section>
+<section class="narrow-section"><div class="panel">
+<form method="post" class="stack-form">
+  <label for="location">Location *</label><input id="location" name="location" required maxlength="100" value="{{ alert['location'] if alert else '' }}" placeholder="City or destination">
+  <label for="title">Alert title *</label><input id="title" name="title" required maxlength="150" value="{{ alert['title'] if alert else '' }}" placeholder="Short, clear alert title">
+  <label for="severity">Severity *</label><select id="severity" name="severity">{% for level in ['Low','Medium','High','Critical'] %}<option value="{{ level }}" {% if alert and alert['severity']==level %}selected{% endif %}>{{ level }}</option>{% endfor %}</select>
+  <label for="details">Details *</label><textarea id="details" name="details" rows="4" maxlength="1000" required>{{ alert['details'] if alert else '' }}</textarea>
+  <label for="instructions">Recommended actions *</label><textarea id="instructions" name="instructions" rows="4" maxlength="1000" required>{{ alert['instructions'] if alert else '' }}</textarea>
+  <label for="source">Source / verification note *</label><input id="source" name="source" required maxlength="200" value="{{ alert['source'] if alert else 'Administrator-entered information — not independently verified' }}">
+  <div class="form-actions"><button class="btn btn-primary" type="submit">Save alert</button><a class="btn btn-outline" href="{{ url_for('admin_dashboard') }}">Cancel</a></div>
+</form>
+</div></section>
+{% endblock %}
